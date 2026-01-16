@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sel entrehiloss</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#4a235a;text-align:center;}
+.header-container{background:#d9bdf2;padding-bottom:40px;}
+.header{padding:30px 20px 0 20px;border-bottom-left-radius:15px;border-bottom-right-radius:15px;}
+.header img{
+  width:120px;
+  margin-top:20px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+}
+.header h1{margin:10px 0 0 0;}
+.linea-decorativa{width:60px;border:2px solid #e6c9f0;margin:20px auto 10px auto;}
+.presentacion{
+  font-size:18px;font-weight:500;color:#4a235a;
+  padding:20px 25px;
+  max-width:700px;
+  margin:0 auto 30px auto;
+  border-radius:10px;
+  background:rgba(230,201,240,0.1);
+  border:1px solid rgba(230,201,240,0.3);
+  box-sizing:border-box;
+}
+.btn-cuidados{display:block;margin:40px auto 10px auto;background:#d9bdf2;color:#4a235a;border:none;padding:6px 12px;border-radius:20px;cursor:pointer;font-size:12px;box-shadow:0 2px 5px rgba(0,0,0,0.1);transition:background .3s;}
+.btn-cuidados:hover{background:#e6c9f0;}
+.productos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:25px;margin-top:30px;}
+.producto{border:1px solid #e6d6ef;border-radius:12px;padding:15px;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.08);transition:transform .3s,box-shadow .3s;position:relative;}
+.producto:hover{transform:translateY(-3px);box-shadow:0 5px 15px rgba(0,0,0,0.15);}
+.producto .destacado{font-size:12px;color:#7a4a9f;margin-top:4px;font-weight:500;position:absolute;top:10px;right:10px;background:#f3e6fa;padding:2px 6px;border-radius:6px;pointer-events:none;}
+.producto button{background:#e6c9f0;color:#4a235a;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:14px;margin-top:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1);transition:background .3s;}
+.producto button:hover{background:#d9bdf2;}
+.cantidad-box{display:flex;justify-content:center;align-items:center;margin-top:5px;gap:8px;}
+.cantidad-box button{padding:4px 10px;background:#d8b7e5;border:none;border-radius:4px;cursor:pointer;transition:background .3s;}
+.cantidad-box button:hover{background:#cfa1e3;}
+#detalleProducto{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;opacity:0;transition:opacity .3s ease-in-out;z-index:200;}
+#detalleProducto.mostrar{display:flex;opacity:1;}
+.detalle-box{background:white;padding:25px;width:80%;max-width:500px;border-radius:15px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.2);position:relative;display:flex;flex-direction:column;align-items:center;}
+#detalleProducto img{max-height:300px;margin:10px 0;}
+.nav-imagen{position:absolute;top:50%;transform:translateY(-50%);background:rgba(217,189,242,0.3);border:none;padding:6px 12px;border-radius:50%;cursor:pointer;font-size:18px;transition:background .3s;}
+.nav-imagen:hover{background:rgba(217,189,242,0.5);}
+.nav-izq{left:-20px;}
+.nav-der{right:-20px;}
+#modalCuidados{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:210;}
+.cuidados-box{background:white;padding:25px;width:80%;max-width:600px;border-radius:15px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+#carritoFlotante{position:fixed;bottom:20px;right:20px;background:#e6c9f0;color:#4a235a;padding:8px 12px;border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .3s;z-index:100;}
+#carritoFlotante:hover{background:#d9bdf2;}
+#carritoFlotante svg{width:22px;height:22px;fill:#4a235a;}
+#modalCarrito{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:220;}
+.carrito-box{background:white;padding:20px;border-radius:12px;max-width:400px;width:90%;text-align:left;}
+.carrito-box h2{margin-top:0;}
+.cerrar{float:right;cursor:pointer;}
+.contacto-logos img{width:22px;height:22px;margin:0 8px;padding:4px;background:rgba(217,189,242,0.2);border-radius:6px;transition:transform .3s;}
+.contacto-logos img:hover{transform:scale(1.2);}
+footer{margin-top:40px;padding:20px;font-size:13px;color:#4a235a;background:#f5e6fa;}
+.btn-comprar{background:#e6c9f0;color:#4a235a;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;transition:background .3s;margin-top:10px;width:100%;}
+.btn-comprar:hover{background:#d9bdf2;}
+.btn-vaciar{background:#f5e6fa;color:#4a235a;border:none;border-radius:8px;padding:6px 12px;cursor:pointer;transition:background .3s;margin-top:10px;width:100%;}
+.btn-vaciar:hover{background:#e6c9f0;}
+</style>
+</head>
+<body>
+
+<div class="header-container">
+  <div class="header">
+    <img src="logo.png" width="120">
+    <h1>Sel entrehiloss</h1>
+  </div>
+  <div class="linea-decorativa"></div>
+  <p class="presentacion">
+    Cada prenda de Sel entrehiloss está hecha a mano con dedicación, atención al detalle y mucho amor.
+  </p>
+</div>
+
+<div class="contenedor">
+<h2>Productos</h2>
+<div class="productos-grid">
+
+<div class="producto" data-nombre="Llavero Snoopy" data-descripcion="Llavero tejido en crochet con overol." data-imagenes='["snoopy1.jpg","snoopy2.jpg"]' data-precio="4500">
+  <div class="destacado">Stock limitado</div>
+  <img src="snoopy1.jpg" width="100%" class="imagen-detalle">
+  <h3>Llavero Snoopy</h3>
+  <p>Crochet artesanal</p>
+  <div class="cantidad-box">
+    <button onclick="modificarCantidad(this,-1)">-</button>
+    <span class="cantidad">0</span>
+    <button onclick="modificarCantidad(this,1)">+</button>
+  </div>
+  <button onclick="agregarCarrito(this)">Agregar</button>
+</div>
+
+<div class="producto" data-nombre="Tote Bag Crochet" data-descripcion="Bolso tejido a mano en crochet." data-imagenes='["tote1.jpg"]' data-precio="12000">
+  <div class="destacado">Stock limitado</div>
+  <img src="tote1.jpg" width="100%" class="imagen-detalle">
+  <h3>Tote Bag Crochet</h3>
+  <p>Bolso tejido a mano</p>
+  <div class="cantidad-box">
+    <button onclick="modificarCantidad(this,-1)">-</button>
+    <span class="cantidad">0</span>
+    <button onclick="modificarCantidad(this,1)">+</button>
+  </div>
+  <button onclick="agregarCarrito(this)">Agregar</button>
+</div>
+
+<div class="producto" data-nombre="Vincha" data-descripcion="Vincha super linda para que luzcas este verano" data-imagenes='["vincha1.jpg","vincha2.jpg"]' data-precio="3500">
+  <div class="destacado">Stock limitado</div>
+  <img src="vincha1.jpg" width="100%" class="imagen-detalle">
+  <h3>Vincha</h3>
+  <p>Accesorio artesanal</p>
+  <div class="cantidad-box">
+    <button onclick="modificarCantidad(this,-1)">-</button>
+    <span class="cantidad">0</span>
+    <button onclick="modificarCantidad(this,1)">+</button>
+  </div>
+  <button onclick="agregarCarrito(this)">Agregar</button>
+</div>
+
+<div class="producto" data-nombre="Hello Kitty Mariquita" data-descripcion="Hello Kitty Mariquita con detalles encantadores" data-imagenes='["hellokitty1.jpg","hellokitty2.jpg"]' data-precio="4000">
+  <div class="destacado">Stock limitado</div>
+  <img src="hellokitty1.jpg" width="100%" class="imagen-detalle">
+  <h3>Hello Kitty Mariquita</h3>
+  <p>Accesorio artesanal</p>
+  <div class="cantidad-box">
+    <button onclick="modificarCantidad(this,-1)">-</button>
+    <span class="cantidad">0</span>
+    <button onclick="modificarCantidad(this,1)">+</button>
+  </div>
+  <button onclick="agregarCarrito(this)">Agregar</button>
+</div>
+
+</div>
+
+<h2>Pedidos y contacto</h2>
+<div class="contacto-logos">
+  <a href="https://wa.me/5491156558294" target="_blank">
+    <img src="whatsapp.png" alt="WhatsApp">
+  </a>
+  <a href="https://www.instagram.com/sel.entrehiloss" target="_blank">
+    <img src="instagram.png" alt="Instagram">
+  </a>
+</div>
+
+<!-- Modal Detalle Producto -->
+<div id="detalleProducto">
+  <div class="detalle-box">
+    <span class="cerrar" onclick="cerrarDetalle()">✖</span>
+    <h2 id="tituloProducto"></h2>
+    <button class="nav-imagen nav-izq" onclick="anteriorImagen()">‹</button>
+    <img id="imagenProducto" width="100%">
+    <button class="nav-imagen nav-der" onclick="siguienteImagen()">›</button>
+    <p id="descripcionProducto"></p>
+    <p>Precio: $<span id="precioProducto"></span></p>
+  </div>
+</div>
+
+<!-- Modal Cuidados -->
+<div id="modalCuidados">
+  <div class="cuidados-box">
+    <span class="cerrar" onclick="cerrarCuidados()">✖</span>
+    <h2>Cuidados de los productos</h2>
+    <ul>
+      <li>Lavar a mano con agua fría y jabón neutro.</li>
+      <li>No frotar ni retorcer.</li>
+      <li>Secar en plano y a la sombra.</li>
+      <li>No usar secarropas ni calor directo.</li>
+      <li>Guardar doblado en lugar seco.</li>
+    </ul>
+  </div>
+</div>
+<button class="btn-cuidados" onclick="abrirCuidados()">Cuidados de los productos</button>
+
+<!-- Carrito flotante -->
+<div id="carritoFlotante" onclick="abrirCarrito()">
+  <svg viewBox="0 0 24 24"><path d="M7 4h-2l-3 9h18l-3-9h-10zm0 13c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zm10 0c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2z"/></svg>
+  Carrito (<span id="cantidadCarrito">0</span>)
+</div>
+
+<!-- Modal Carrito -->
+<div id="modalCarrito">
+  <div class="carrito-box">
+    <span class="cerrar" onclick="cerrarCarrito()">✖</span>
+    <h2>Tu carrito</h2>
+    <div id="itemsCarrito"></div>
+    <p>Total: $<span id="totalCarrito">0</span></p>
+    <button class="btn-comprar" onclick="enviarWhatsApp()">Enviar a WhatsApp</button>
+    <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
+  </div>
+</div>
+
+<footer>
+Gracias por visitar Sel entrehiloss. Cada pieza es hecha con dedicación y cariño. ¡Esperamos que encuentres algo que te enamore!
+</footer>
+
+<script>
+let carrito=[];
+let imagenesProducto=[];
+let indiceImagen=0;
+
+function modificarCantidad(btn,valor){
+  let span=btn.parentElement.querySelector('.cantidad');
+  let cantidad=parseInt(span.innerText)||0;
+  cantidad+=valor;
+  if(cantidad<0)cantidad=0;
+  span.innerText=cantidad===0?"0":cantidad;
+}
+
+function agregarCarrito(btn){
+  let producto=btn.parentElement;
+  let nombre=producto.dataset.nombre;
+  let precio=parseInt(producto.dataset.precio);
+  let cantidad=parseInt(producto.querySelector('.cantidad').innerText)||0;
+  if(cantidad===0)return;
+  let index=carrito.findIndex(i=>i.nombre===nombre);
+  if(index>-1)carrito[index].cantidad=cantidad;
+  else carrito.push({nombre,precio,cantidad});
+  actualizarModalCarrito();
+}
+
+function actualizarModalCarrito(){
+  let itemsDiv=document.getElementById("itemsCarrito");
+  itemsDiv.innerHTML="";
+  let total=0;
+  carrito=carrito.filter(i=>i.cantidad>0);
+  carrito.forEach(item=>{
+    let subtotal=item.precio*item.cantidad;
+    total+=subtotal;
+    itemsDiv.innerHTML+=`<p>${item.nombre} x${item.cantidad} - $${subtotal}</p>`;
+  });
+  document.getElementById("totalCarrito").innerText=total;
+  let cantidadTotal = carrito.reduce((acc,i)=>acc+i.cantidad,0);
+  document.getElementById("cantidadCarrito").innerText = cantidadTotal > 0 ? cantidadTotal : "0";
+}
+
+function enviarWhatsApp(){
+  if(carrito.length===0)return alert("No hay productos en el carrito.");
+  let listaProductos=carrito.map(item=>item.nombre+' x'+item.cantidad).join(", ");
+  let total=carrito.reduce((acc,i)=>acc+i.precio*i.cantidad,0);
+  let mensaje="Hola, ¿qué tal? Desearía comprar estos productos: "+listaProductos+". Total: $"+total+". Muchas gracias.";
+  let link="https://wa.me/5491156558294?text="+encodeURIComponent(mensaje);
+  window.open(link,"_blank");
+}
+
+function vaciarCarrito(){
+  carrito=[];
+  actualizarModalCarrito();
+}
+
+function abrirCarrito(){ 
+  actualizarModalCarrito(); 
+  document.getElementById("modalCarrito").style.display="flex";
+}
+function cerrarCarrito(){document.getElementById("modalCarrito").style.display="none";}
+
+document.querySelectorAll('.imagen-detalle').forEach(img=>{
+  img.addEventListener('click',function(){
+    let producto=img.parentElement;
+    abrirDetalle(producto);
+  });
+});
+
+function abrirDetalle(producto){
+  imagenesProducto = JSON.parse(producto.dataset.imagenes);
+  indiceImagen = 0;
+  document.getElementById("imagenProducto").src = imagenesProducto[indiceImagen];
+  document.getElementById("tituloProducto").innerText = producto.dataset.nombre;
+  document.getElementById("descripcionProducto").innerText = producto.dataset.descripcion;
+  document.getElementById("precioProducto").innerText = producto.dataset.precio;
+  document.getElementById("detalleProducto").classList.add("mostrar");
+}
+
+function siguienteImagen(){
+  indiceImagen = (indiceImagen + 1) % imagenesProducto.length;
+  document.getElementById("imagenProducto").src = imagenesProducto[indiceImagen];
+}
+function anteriorImagen(){
+  indiceImagen = (indiceImagen - 1 + imagenesProducto.length) % imagenesProducto.length;
+  document.getElementById("imagenProducto").src = imagenesProducto[indiceImagen];
+}
+
+document.querySelectorAll('.producto button, .cantidad-box button').forEach(b=>{
+  b.addEventListener('click',function(e){e.stopPropagation();});
+});
+
+function cerrarDetalle(){document.getElementById("detalleProducto").classList.remove("mostrar");}
+function abrirCuidados(){document.getElementById("modalCuidados").style.display="flex";}
+function cerrarCuidados(){document.getElementById("modalCuidados").style.display="none";}
+</script>
+
+</
